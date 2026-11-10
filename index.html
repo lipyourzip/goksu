@@ -94,7 +94,7 @@ h1 {
   display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center;
 }
 #qrcode { background: #fff; padding: 8px; border-radius: 8px; line-height: 0; }
-#qrcode img, #qrcode canvas { width: 112px !important; height: 112px !important; }
+#qrcode svg { width: 112px; height: 112px; display: block; }
 .qr p { margin: 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
 .qr p strong { color: var(--ink); display: block; font-size: 14.5px; margin-bottom: 2px; }
 .copy {
@@ -139,7 +139,7 @@ h1 {
   </section>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
 // === Edit details here ===
 const PERSON = {
@@ -172,12 +172,15 @@ const vcard = [
 ].join("\n");
 
 try {
-  new QRCode(document.getElementById("qrcode"), {
-    text: unescape(encodeURIComponent(vcard)),
-    width: 224, height: 224,
-    colorDark: "#17233f", colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
+  qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
+  const qr = qrcode(0, "M");
+  qr.addData(vcard, "Byte");
+  qr.make();
+  const box = document.getElementById("qrcode");
+  box.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  const svg = box.querySelector("svg");
+  svg.style.width = "112px"; svg.style.height = "112px";
+  svg.querySelector("path").setAttribute("fill", "#17233f");
 } catch (e) {
   document.getElementById("qrcode").textContent = "QR code could not load";
 }
