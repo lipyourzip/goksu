@@ -70,7 +70,7 @@ h1 {
 .rule { width: 40px; height: 1px; background: var(--line); margin: 26px auto; border: 0; }
 .icons { display: flex; justify-content: center; gap: 14px; }
 .icon {
-  width: 54px; height: 54px; border-radius: 50%;
+  width: 56px; height: 56px; border-radius: 14px;
   display: grid; place-items: center;
   font-size: 21px; color: #fff; text-decoration: none;
   transition: transform .15s ease, box-shadow .15s ease;
@@ -78,7 +78,8 @@ h1 {
 }
 .icon:hover { transform: translateY(-2px); }
 .icon:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.icon.phone, .icon.mail { background: var(--ink); }
+.icon.phone { background: linear-gradient(180deg, #5df27a 0%, #28c840 100%); font-size: 23px; }
+.icon.mail { background: linear-gradient(180deg, #2fa4ff 0%, #1565f0 100%); font-size: 23px; }
 .icon.wa { background: #25d366; font-size: 25px; }
 .icon.li { background: #0a66c2; }
 .save {
